@@ -1,4 +1,4 @@
-from base.base import BaseActivationFunction
+from .base.base import BaseActivationFunction
 
 
 class Relu(BaseActivationFunction):

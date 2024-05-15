@@ -3,6 +3,8 @@ class BaseActivationFunction:
     """
     Base class for activation functions in neural networks.
     """
+    def __init__(self):
+        pass
 
     def forward(self, x):
         """

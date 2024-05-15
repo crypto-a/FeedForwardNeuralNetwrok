@@ -1,6 +1,6 @@
 import numpy as np
-from ActivationFunctions.base.base import BaseActivationFunction
-from ActivationFunctions.Relu import Relu
+from .ActivationFunctions.base.base import BaseActivationFunction
+from .ActivationFunctions.Relu import Relu
 
 
 class Perceptron:

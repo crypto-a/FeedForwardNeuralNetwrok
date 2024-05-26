@@ -1,7 +1,7 @@
 import numpy as np
-from Activation.base.baseActivationFunction import BaseActivationFunction
-from Activation.relu import ReLU
-from Activation.softmax import Softmax
+from .Activation.base.baseActivationFunction import BaseActivationFunction
+from .Activation.relu import ReLU
+from .Activation.softmax import Softmax
 
 
 class Dense:
@@ -20,8 +20,10 @@ class Dense:
         :param n_inputs:
         :param activation:
         """
-        self.weights = 0.10 * np.random.randn(n_inputs, 1)
+        self.weights = 0.10 * np.random.randn(n_inputs)
         self.bias = 0
+
+        print(f"weights: {self.weights}")
 
         activation_cases = {
             'relu': ReLU,
@@ -42,5 +44,6 @@ class Dense:
         """
         self.inputs = inputs
         self.output_preactivation = np.dot(inputs, self.weights) + self.bias
-        self.output = self.activation.forward(self.output)
+        print(f"output_preactivation: {self.output_preactivation}")
+        self.output = self.activation.forward(self.output_preactivation)
         return self.output

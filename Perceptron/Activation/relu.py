@@ -7,3 +7,4 @@ class ReLU(BaseActivationFunction):
 
     def forward(self, inputs):
         self.output = np.maximum(0, inputs)
+        return self.output

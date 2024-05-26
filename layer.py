@@ -1,16 +1,20 @@
 import numpy as np
+from Perceptron.dense import Dense
 
-np.random.seed(0)
 
+class Layer:
+    layer: list[Dense]
 
-class LayerDense:
-    weights = np.ndarray
-    biases = np.ndarray
-    output = np.ndarray
+    layer_output: np.ndarray
 
-    def __init__(self, n_inputs, n_neurons):
-        self.weights = 0.10 * np.random.randn(n_inputs, n_neurons)  # change direction of matrix to prevent transposing
-        self.biases = np.zeros((1, n_neurons))
+    def __init__(self, n_inputs: int, n_neurons: int, activation: str):
+        self.layer = [Dense(n_inputs, activation) for _ in range(n_neurons)]
 
     def forward(self, inputs):
-        self.output = np.dot(inputs, self.weights) + self.biases
+        self.layer_output = np.array([layer.forward(inputs) for layer in self.layer])
+        return self.layer_output
+
+
+
+
+

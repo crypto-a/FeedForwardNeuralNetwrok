@@ -1,6 +1,5 @@
 import numpy as np
-from Activation.relu import ReLU
-from Activation.softmax import Softmax
+
 np.random.seed(0)
 
 

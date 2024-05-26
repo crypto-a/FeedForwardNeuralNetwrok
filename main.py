@@ -1,6 +1,6 @@
 from layer import LayerDense
-from Activation.relu import ReLU
-from Activation.softmax import Softmax
+from Perceptron.Activation.relu import ReLU
+from Perceptron.Activation.softmax import Softmax
 
 
 if __name__ == '__main__':

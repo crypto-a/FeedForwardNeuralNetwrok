@@ -2,18 +2,24 @@ import numpy as np
 from .base.baseLossFunction import BaseLossFunction
 
 
-class CategoricalCrossEntropy(BaseLossFunction):
-
+class CrossEntropyLoss(BaseLossFunction):
     def forward(self, y_pred, y_true):
         samples = len(y_pred)
-        y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7)  # prevent taking log of zero
+        y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7)
 
-        # Check if labels are one-hot encoded
         if len(y_true.shape) == 1:
             correct_confidences = y_pred_clipped[range(samples), y_true]
         elif len(y_true.shape) == 2:
             correct_confidences = np.sum(y_pred_clipped * y_true, axis=1)
 
-        # compute the loss
         negative_log_likelihoods = -np.log(correct_confidences)
-        return negative_log_likelihoods
+        return np.mean(negative_log_likelihoods)
+
+    def backward(self, dvalues, y_true):
+        samples = len(dvalues)
+
+        if len(y_true.shape) == 1:
+            y_true = np.eye(dvalues.shape[1])[y_true]
+
+        self.dinputs = -y_true / dvalues
+        self.dinputs = self.dinputs / samples

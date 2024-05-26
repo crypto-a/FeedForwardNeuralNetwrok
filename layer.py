@@ -7,6 +7,7 @@ class Layer:
 
     def forward(self, inputs):
         self.layer_output = self.dense_layer.forward(inputs)
+
         return self.layer_output
 
     def backward(self, dvalues, learning_rate):

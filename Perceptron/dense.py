@@ -1,7 +1,7 @@
 import numpy as np
 from .Activation.base.baseActivationFunction import BaseActivationFunction
 from .Activation.relu import ReLU
-from .Activation.softmax import Softmax
+from .Activation.sigmoid import Sigmoid
 
 class Dense:
     def __init__(self, n_inputs: int, n_neurons: int, activation: str):
@@ -10,7 +10,7 @@ class Dense:
 
         activation_cases = {
             'relu': ReLU,
-            'softmax': Softmax
+            'sigmoid': Sigmoid,
         }
 
         if activation not in activation_cases:
@@ -21,6 +21,7 @@ class Dense:
     def forward(self, inputs: np.ndarray) -> np.ndarray:
         self.inputs = inputs
         self.output_preactivation = np.dot(inputs, self.weights) + self.bias
+
         self.output = self.activation.forward(self.output_preactivation)
         return self.output
 

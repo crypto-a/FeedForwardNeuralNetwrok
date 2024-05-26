@@ -1,50 +1,35 @@
 from ffnn import ForwardFeed
 import numpy as np
-
-from Perceptron.dense import Dense
-from layer import Layer
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 if __name__ == "__main__":
-    # Create the neural network
-    ffnn = ForwardFeed(n_inputs=3)
-
-    # Add layers
-    ffnn.add_layer(n_neurons=4, activation='relu')
-    ffnn.add_layer(n_neurons=1, activation='softmax')
-
-    # Compile the network
+    ffnn = ForwardFeed(n_inputs=2)
+    ffnn.add_layer(n_neurons=8, activation='relu')
+    ffnn.add_layer(n_neurons=8, activation='relu')
+    ffnn.add_layer(n_neurons=1, activation='sigmoid')
     ffnn.compile()
 
-    # Training data
-    X = np.array([[0, 0, 1],
-                  [0, 1, 1],
-                  [1, 0, 1],
-                  [1, 1, 1]])
-    y = np.array([[0], [1], [1], [0]])
+    from sklearn.datasets import make_moons
+    from sklearn.model_selection import train_test_split
+    from sklearn.preprocessing import StandardScaler
 
-    # Train the neural network
-    ffnn.train(X, y, epochs=10000, learning_rate=0.1)
+    X, y = make_moons(n_samples=1000, noise=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
 
-    # Test the neural network
-    predictions = ffnn.predict(X)
+    y_train = y_train.reshape(-1, 1)
+    y_test = y_test.reshape(-1, 1)
+
+    ffnn.train(X_train, y_train, epochs=10000, learning_rate=0.01)
+
+    predictions = ffnn.predict(X_test)
+    predictions = (predictions > 0.5).astype(int)
+    accuracy = np.mean(predictions == y_test)
+
     print("Predicted Output:")
     print(predictions)
-
-    # layer1 = Layer(n_inputs=3, n_neurons=4, activation='relu')
-    # layer2 = Layer(n_inputs=4, n_neurons=5, activation='relu')
-    # layer3 = Layer(n_inputs=5, n_neurons=2, activation='softmax')
-    #
-    # inputs = np.array([[0, 0, 1],
-    #                    [0, 1, 1],
-    #                    [1, 0, 1],
-    #                    [1, 1, 1]])
-    #
-    # layer1_output = layer1.forward(inputs)
-    # print(layer1_output)
-    # layer2_output = layer2.forward(layer1_output)
-    # print(layer2_output)
-    # layer3_output = layer3.forward(layer2_output)
-    # print(layer3_output)
-
-
-
+    print(f"Accuracy: {accuracy * 100:.2f}%")

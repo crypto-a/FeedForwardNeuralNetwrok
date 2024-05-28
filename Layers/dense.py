@@ -1,10 +1,6 @@
 from base import BaseLayer
 from base import BaseActivationFunction
-
-# activation functions
-from Activation.relu import ReLU
-
-# Other libraries
+from Activation import *
 import numpy as np
 
 
@@ -48,6 +44,8 @@ class Dense(BaseLayer):
 
         activation_cases = {
             'relu': ReLU,
+            'sigmoid': Sigmoid,
+            'softmax': Softmax
         }
 
         if activation not in activation_cases:

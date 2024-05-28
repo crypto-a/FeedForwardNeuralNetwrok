@@ -1,5 +1,5 @@
-from base import BaseLayer
-from base import BaseActivationFunction
+from Base import BaseLayer
+from Base import BaseActivationFunction
 from Activation import *
 import numpy as np
 

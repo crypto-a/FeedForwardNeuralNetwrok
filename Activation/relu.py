@@ -1,4 +1,4 @@
-from base import BaseActivationFunction
+from Base import BaseActivationFunction
 
 import numpy as np
 

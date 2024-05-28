@@ -1,8 +1,17 @@
-from Layers import Dense
+from Netwrok import FeedForward
+
+import numpy as np
 
 
-layer = Dense(2, 3, 'relu')
+# Create instances of the FeedForward network
+ffnn = FeedForward(n_inputs=3)
+ffnn.add_layer(layer_type='dense', n_neurons=5, activation='relu')
+ffnn.add_layer(layer_type='dense', n_neurons=2, activation='softmax')
+ffnn.compile(loss='CCE', optimizer='ADAM')
 
-x = [[1, 2], [3, 4], [5, 6]]
+# Training data
+X = np.array([[1, 2, 3], [4, 5, 6]])
+y = np.array([[0, 1], [1, 0]])
 
-print(layer.forward(x))
+# Train the network
+ffnn.train(X, y, epochs=100, learning_rate=0.001)

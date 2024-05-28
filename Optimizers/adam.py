@@ -1,18 +1,16 @@
-from base import BaseOptimizer
-
 import numpy as np
-
+from Base import BaseOptimizer
 
 class Adam(BaseOptimizer):
     """
     Adam optimizer.
 
     >>> adam = Adam(learning_rate=0.001)
-    >>> weights = np.array([0.5, -0.5])
-    >>> gradients = np.array([0.1, -0.2])
+    >>> weights = np.array([[0.5, -0.5], [0.5, -0.5]])
+    >>> gradients = np.array([[0.1, -0.2], [0.1, -0.2]])
     >>> for _ in range(1000):
     ...     adam.update(weights, gradients)
-    >>> np.allclose(weights, np.array([-0.5, 0.5]), atol=1e-2)
+    >>> np.allclose(weights, np.array([[-0.5, 0.5], [-0.5, 0.5]]), atol=1e-2)
     True
     """
 
@@ -40,14 +38,17 @@ class Adam(BaseOptimizer):
         self.m = self.beta1 * self.m + (1 - self.beta1) * gradients
         self.v = self.beta2 * self.v + (1 - self.beta2) * (gradients ** 2)
 
+        # Bias correction
         m_hat = self.m / (1 - self.beta1 ** self.t)
         v_hat = self.v / (1 - self.beta2 ** self.t)
 
+        # Debug print statements to track shapes and values
+        print(f"Iteration {self.t}")
+        print(f"weights shape: {weights.shape}, weights: {weights}")
+        print(f"gradients shape: {gradients.shape}, gradients: {gradients}")
+        print(f"m shape: {self.m.shape}, m: {self.m}")
+        print(f"v shape: {self.v.shape}, v: {self.v}")
+        print(f"m_hat shape: {m_hat.shape}, m_hat: {m_hat}")
+        print(f"v_hat shape: {v_hat.shape}, v_hat: {v_hat}")
+
         weights -= self.learning_rate * m_hat / (np.sqrt(v_hat) + self.epsilon)
-        # print(weights)
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod(verbose=True)

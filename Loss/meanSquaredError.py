@@ -1,4 +1,4 @@
-from base import BaseLossFunction
+from Base import BaseLossFunction
 import numpy as np
 
 

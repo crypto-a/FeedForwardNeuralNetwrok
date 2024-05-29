@@ -132,7 +132,7 @@ class FeedForward(BaseOptimizer):
             loss = self.loss.forward(predictions, y)
 
             if epoch % 100 == 0:
-                print(f'Epoch {epoch} - Loss: {loss}')
+                print(f'Epoch {epoch} - Loss: {np.mean(loss)}')
 
             d_values = self.loss.backward(predictions, y)
             self.backward(d_values)

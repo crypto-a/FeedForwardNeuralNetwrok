@@ -1,6 +1,7 @@
 import numpy as np
 from Base import BaseOptimizer
 
+
 class Adam(BaseOptimizer):
     """
     Adam optimizer.
@@ -30,8 +31,9 @@ class Adam(BaseOptimizer):
         :param weights: Current weights
         :param gradients: Computed gradients
         """
-        if self.m is None:
+        if self.m is None or self.m.shape != weights.shape:
             self.m = np.zeros_like(weights)
+        if self.v is None or self.v.shape != weights.shape:
             self.v = np.zeros_like(weights)
 
         self.t += 1
@@ -43,12 +45,12 @@ class Adam(BaseOptimizer):
         v_hat = self.v / (1 - self.beta2 ** self.t)
 
         # Debug print statements to track shapes and values
-        print(f"Iteration {self.t}")
-        print(f"weights shape: {weights.shape}, weights: {weights}")
-        print(f"gradients shape: {gradients.shape}, gradients: {gradients}")
-        print(f"m shape: {self.m.shape}, m: {self.m}")
-        print(f"v shape: {self.v.shape}, v: {self.v}")
-        print(f"m_hat shape: {m_hat.shape}, m_hat: {m_hat}")
-        print(f"v_hat shape: {v_hat.shape}, v_hat: {v_hat}")
+        # print(f"Iteration {self.t}")
+        # print(f"weights shape: {weights.shape}, weights: {weights}")
+        # print(f"gradients shape: {gradients.shape}, gradients: {gradients}")
+        # print(f"m shape: {self.m.shape}, m: {self.m}")
+        # print(f"v shape: {self.v.shape}, v: {self.v}")
+        # print(f"m_hat shape: {m_hat.shape}, m_hat: {m_hat}")
+        # print(f"v_hat shape: {v_hat.shape}, v_hat: {v_hat}")
 
         weights -= self.learning_rate * m_hat / (np.sqrt(v_hat) + self.epsilon)
